@@ -302,6 +302,8 @@ class Chavosh implements ChavoshInterface
 
     protected function drawShapes(&$image)
     {
+        $shapeLocationBorder = floor($this->width / $this->shapesCount);
+
         for ($i = 1; $i <= $this->shapesCount; $i++) {
             $color = $this->shapesColor[array_rand($this->shapesColor)];
             // the border color has been set
@@ -313,7 +315,9 @@ class Chavosh implements ChavoshInterface
             imagecolortransparent($image, $ellipseColor);
             $radius = rand($this->height/5, $this->height);
 
-            $cx = rand(-10, $this->width);
+            $cxStart = ($i - 1) * $shapeLocationBorder;
+            $cxFinish = $i * $shapeLocationBorder;
+            $cx = rand($cxStart, $cxFinish);
             $cy = rand(-10, $this->height);
             if (isset($bordercolor)) {
                 $bordercolor = imagecolorallocate($image, ...$this->hexToRgb($bordercolor));
